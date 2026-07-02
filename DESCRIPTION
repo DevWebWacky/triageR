@@ -2,7 +2,7 @@ Package: triageR
 Title: Automated Machine Learning and AI Agent Tools for Clinical Prediction Modelling
 Version: 0.0.0.9000
 Authors@R: 
-    person("Uwakmfon", "Paul", , "uwakmfon@gmail.com", role = c("aut", "cre"))
+    person("Uwakmfon", "Paul", , "uwakmfon@gmail.com", role = c("aut", "cre", "cph"))
 Description: A tool that provides a streamlined workflow for building, validating, and reporting clinical prediction models. Combines standard machine learning and survival analysis tools with an optional AI agent that recommends appropriate statistical methods, runs sensitivity analyses, and flags common pitfalls. Includes automated generation of TRIPOD+AI compliant reports for reproducible, guideline-aligned research.
 License: MIT + file LICENSE
 Encoding: UTF-8
