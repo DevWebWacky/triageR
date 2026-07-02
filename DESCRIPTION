@@ -1,13 +1,32 @@
 Package: triageR
-Title: What the Package Does (One Line, Title Case)
+Title: Automated Machine Learning and AI Agent Tools for Clinical Prediction Modelling
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Uwakmfon", "Paul", , "uwakmfon@gmail.com", role = c("aut", "cre"))
+Description: A tool that provides a streamlined workflow for building, validating, and reporting clinical prediction models. Combines standard machine learning and survival analysis tools with an optional AI agent that recommends appropriate statistical methods, runs sensitivity analyses, and flags common pitfalls. Includes automated generation of TRIPOD+AI compliant reports for reproducible, guideline-aligned research.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 8.0.0
 URL: https://github.com/DevWebWacky/triageR
 BugReports: https://github.com/DevWebWacky/triageR/issues
+Suggests: 
+    missForest,
+    ranger,
+    testthat (>= 3.0.0),
+    xgboost
+Config/testthat/edition: 3
+Imports: 
+    DALEX,
+    dplyr,
+    ellmer,
+    mice,
+    naniar,
+    parsnip,
+    quarto,
+    recipes,
+    rsample,
+    survival,
+    tibble,
+    workflows,
+    yardstick
