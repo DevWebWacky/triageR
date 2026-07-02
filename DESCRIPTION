@@ -23,10 +23,12 @@ Imports:
     mice,
     naniar,
     parsnip,
+    pROC,
     quarto,
     recipes,
     rsample,
     survival,
     tibble,
+    tidyr,
     workflows,
     yardstick
