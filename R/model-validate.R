@@ -67,9 +67,15 @@ tr_validate <- function(model, newdata = NULL, threshold = 0.5) {
 
   metrics_tbl <- dplyr::bind_rows(auc, sens, spec, acc)
 
-  #package into own object
+  #build confusion matrix
+  conf_mat <- yardstick::conf_mat(results, truth = truth, estimate = .pred_class)
+  conf_tbl <- as.data.frame(conf_mat$table)
+  names(conf_tbl) <- c("predicted", "actual", "n")
+
+  #package into our own object
   out <- list(
     metrics = metrics_tbl,
+    confusion_matrix = conf_mat,
     predictions = results,
     validated_on = if (identical(newdata, model$training_data)) "training_data" else "newdata"
   )
@@ -77,6 +83,8 @@ tr_validate <- function(model, newdata = NULL, threshold = 0.5) {
 
   cat("Validation metrics (", out$validated_on, "):\n\n", sep = "")
   print(metrics_tbl)
+  cat("\nConfusion Matrix:\n\n")
+  print(conf_mat)
 
   invisible(out)
 }

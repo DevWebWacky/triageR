@@ -10,6 +10,7 @@ test_that("tr_validate computes metrics on newdata without warning", {
   expect_s3_class(result, "triageR_validation")
   expect_equal(result$validated_on, "newdata")
   expect_true(all(c("roc_auc", "sens", "spec", "accuracy") %in% result$metrics$.metric))
+  expect_true(!is.null(result$confusion_matrix))
 })
 
 test_that("tr_validate warns when no newdata is supplied", {

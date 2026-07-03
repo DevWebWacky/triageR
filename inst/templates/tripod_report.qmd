@@ -49,6 +49,17 @@ if (!is.null(validation)) {
 }
 ```
 
+### Confusion Matrix
+
+```{r}
+#| echo: false
+if (!is.null(validation)) {
+  knitr::kable(as.data.frame(validation$confusion_matrix$table))
+} else {
+  cat("Not run.")
+}
+```
+
 *Validated on: `r if (!is.null(validation)) validation$validated_on else "N/A"`*
 
 ## Sensitivity Analysis
