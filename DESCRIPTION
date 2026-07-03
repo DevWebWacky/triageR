@@ -21,6 +21,7 @@ Imports:
     DALEX,
     dplyr,
     ellmer,
+    ggplot2,
     mice,
     naniar,
     parsnip,

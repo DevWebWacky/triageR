@@ -72,10 +72,29 @@ tr_validate <- function(model, newdata = NULL, threshold = 0.5) {
   conf_tbl <- as.data.frame(conf_mat$table)
   names(conf_tbl) <- c("predicted", "actual", "n")
 
+  #build ROC curve data and plot
+  roc_data <- yardstick::roc_curve(results, truth = truth, !!prob_col, event_level = "second")
+  roc_plot <- ggplot2::ggplot(roc_data, ggplot2::aes(x = 1 - specificity, y = sensitivity)) +
+    ggplot2::geom_abline(lty = 3, color = "gray50", linewidth = 0.8) +
+    ggplot2::geom_path(color = "#2C5F8A", linewidth = 1.2) +
+    ggplot2::labs(
+      title = "ROC Curve",
+      subtitle = paste0("AUC = ", round(auc$.estimate, 3)),
+      x = "1 - Specificity",
+      y = "Sensitivity"
+    ) +
+    ggplot2::theme_minimal(base_size = 13) +
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(face = "bold"),
+      panel.grid.minor = ggplot2::element_blank()
+    )
+
   #package into our own object
   out <- list(
     metrics = metrics_tbl,
     confusion_matrix = conf_mat,
+    roc_curve = roc_data,
+    roc_plot = roc_plot,
     predictions = results,
     validated_on = if (identical(newdata, model$training_data)) "training_data" else "newdata"
   )
@@ -85,6 +104,7 @@ tr_validate <- function(model, newdata = NULL, threshold = 0.5) {
   print(metrics_tbl)
   cat("\nConfusion Matrix:\n\n")
   print(conf_mat)
+  print(roc_plot)
 
   invisible(out)
 }
