@@ -1,19 +1,8 @@
----
-output: github_document
----
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
 
 # triageR
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 **triageR** provides a streamlined, reproducible workflow for building,
@@ -28,18 +17,18 @@ guidance, to support reproducible, guideline-conscious research.
 
 Most R machine learning tooling (`tidymodels`, `mlr3`, `caret`) is
 general-purpose. Clinical researchers are left to manually stitch
-together model fitting, validation, sensitivity analysis, explainability,
-and TRIPOD-compliant reporting across many separate packages. triageR
-brings these into one coherent workflow, with clinically-aware safeguards
-built in — such as warning when validation is performed only on training
-data, and flagging low events-per-variable ratios before you finalize a
-model.
+together model fitting, validation, sensitivity analysis,
+explainability, and TRIPOD-compliant reporting across many separate
+packages. triageR brings these into one coherent workflow, with
+clinically-aware safeguards built in — such as warning when validation
+is performed only on training data, and flagging low events-per-variable
+ratios before you finalize a model.
 
 The AI agent layer is entirely **optional** — every core function works
 without any LLM/API key. The agent adds method recommendations, plain
-language pipeline review summaries, and assists with sensitivity analysis
-interpretation, but is never required to fit, validate, or explain a
-model.
+language pipeline review summaries, and assists with sensitivity
+analysis interpretation, but is never required to fit, validate, or
+explain a model.
 
 ## Installation
 
@@ -56,7 +45,7 @@ devtools::install_github("DevWebWacky/triageR")
 This is a basic example showing the full pipeline, from raw data to a
 TRIPOD+AI-aligned report.
 
-```{r example}
+``` r
 library(triageR)
 
 # 1. Load and standardize clinical data
@@ -98,7 +87,7 @@ library(triageR)
 ## Core functions
 
 | Layer | Function | Purpose |
-|---|---|---|
+|----|----|----|
 | Data | `tr_load_clinical()` | Load and standardize clinical data |
 | Data | `tr_check_missing()` | Missingness summary and visualization |
 | Data | `tr_impute()` | Multiple imputation (mice / missForest) |
@@ -110,17 +99,16 @@ library(triageR)
 | Agent | `tr_agent_review()` | Pipeline pitfall checks (imbalance, EPV, leakage) |
 | Report | `tr_tripod_report()` | TRIPOD+AI-aligned HTML/docx report |
 
-
-```
+\`\`\`
 
 ## Disclaimer
 
-triageR's AI-generated recommendations and summaries are drafting aids
+triageR’s AI-generated recommendations and summaries are drafting aids
 intended to support, not replace, expert clinical and statistical
 judgment. The TRIPOD+AI report generator is a drafting tool and does not
 guarantee full compliance with the TRIPOD+AI checklist — always review
-against the official checklist at the
-[EQUATOR Network](https://www.equator-network.org/).
+against the official checklist at the [EQUATOR
+Network](https://www.equator-network.org/).
 
 ## License
 
