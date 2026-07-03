@@ -48,8 +48,7 @@ tr_tripod_report <- function(model, validation = NULL, review = NULL,
 
   output_path <- paste0(output_file, ".", format)
 
-  # Step 2: save objects to a temp RDS file (execute_params can't handle
-  # complex R objects like model workflows, so we pass a file path instead)
+  # save objects to a temp RDS file.
   data_bundle <- list(
     model = model,
     validation = validation,
@@ -68,8 +67,10 @@ tr_tripod_report <- function(model, validation = NULL, review = NULL,
   )
 
   #move rendered file from tempdir to the requested location
+  # (skip if source and destination are already the same file)
   rendered_file <- file.path(tempdir(), basename(output_path))
-  if (file.exists(rendered_file)) {
+  if (file.exists(rendered_file) &&
+      normalizePath(rendered_file) != normalizePath(output_path, mustWork = FALSE)) {
     file.copy(rendered_file, output_path, overwrite = TRUE)
   }
 
