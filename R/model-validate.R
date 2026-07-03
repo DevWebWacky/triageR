@@ -27,7 +27,7 @@ tr_validate <- function(model, newdata = NULL, threshold = 0.5) {
   # Decide which data to validate on
   if (is.null(newdata)) {
     warning(
-      "No `newdata` supplied — validating on the training data. ",
+      "No `newdata` supplied, validating on the training data. ",
       "These metrics will be optimistic and should NOT be used for formal ",
       "reporting or TRIPOD+AI compliance. Supply a separate test/holdout set ",
       "for proper validation.",

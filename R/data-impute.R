@@ -2,7 +2,7 @@
 #'
 #' Fills in missing values using either multiple imputation (`mice`) or
 #' a random-forest based approach (`missForest`). The method must be
-#' chosen explicitly — this function does not guess for you.
+#' chosen explicitly, this function does not guess for you.
 #'
 #' @param data A data frame with missing values, typically the output of
 #'   `tr_load_clinical()`.
@@ -30,7 +30,7 @@ tr_impute <- function(data, method = c("mice", "missForest"), m = 5, seed = 123)
   }
 
   if (sum(is.na(data)) == 0) {
-    message("No missing values detected — returning data unchanged.")
+    message("No missing values detected, returning data unchanged.")
     return(data)
   }
 

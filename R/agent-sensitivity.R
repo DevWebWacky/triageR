@@ -1,8 +1,8 @@
 #' Run an automated sensitivity analysis battery
 #'
-#' Re-fits a clinical prediction model under several robustness checks —
+#' Re-fits a clinical prediction model under several robustness checks,
 #' complete-case vs imputed data, outlier exclusion, and subgroup
-#' consistency — and compares performance metrics across them.
+#' consistency, and compares performance metrics across them.
 #'
 #' @param data The original (pre-imputation) data frame, containing the
 #'   same predictors and outcome used in `model`.
@@ -64,13 +64,13 @@ tr_sensitivity <- function(data, model, subgroup_col = NULL, outlier_sd = 3) {
       scenarios[["outliers_excluded"]] <- v_out$metrics
     }
   } else {
-    message("No outliers detected beyond ", outlier_sd, " SD — skipping outlier scenario.")
+    message("No outliers detected beyond ", outlier_sd, " SD, skipping outlier scenario.")
   }
 
   # subgroup consistency
   if (!is.null(subgroup_col)) {
     if (!subgroup_col %in% names(data)) {
-      warning("subgroup_col '", subgroup_col, "' not found — skipping subgroup check.",
+      warning("subgroup_col '", subgroup_col, "' not found, skipping subgroup check.",
               call. = FALSE)
     } else {
       groups <- unique(stats::na.omit(data[[subgroup_col]]))
@@ -90,7 +90,7 @@ tr_sensitivity <- function(data, model, subgroup_col = NULL, outlier_sd = 3) {
             scenarios[[paste0("subgroup_", subgroup_col, "_", g)]] <- v_sub$metrics
           }
         } else {
-          message("Subgroup '", g, "' has fewer than 10 rows — skipping.")
+          message("Subgroup '", g, "' has fewer than 10 rows, skipping.")
         }
       }
     }

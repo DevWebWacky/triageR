@@ -110,7 +110,7 @@ tr_agent_review <- function(data, model, use_agent = TRUE) {
   #AI narrative summary
   if (use_agent && nrow(flags_tbl) > 0) {
     if (!requireNamespace("ellmer", quietly = TRUE)) {
-      message("ellmer not available — skipping AI summary.")
+      message("ellmer not available, skipping AI summary.")
     } else {
       prompt <- paste0(
         "A clinical prediction model pipeline review flagged the following ",

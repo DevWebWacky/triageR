@@ -1,7 +1,5 @@
 # triageR 0.1.0
 
-# triageR 0.0.0.9000
-
 * Initial development version.
 * Added data layer: `tr_load_clinical()`, `tr_check_missing()`, `tr_impute()`.
 * Added model layer: `tr_fit()`, `tr_validate()`, `tr_explain()`.
