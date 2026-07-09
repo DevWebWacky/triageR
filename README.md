@@ -1,7 +1,7 @@
 
 # triageR
 
-# triageR <img src="man/figures/logo.png" align="right" height="139" />
+# triageR <img src="man/figures/logo.png" align="right" height="139"/>
 
 <!-- badges: start -->
 
@@ -9,11 +9,11 @@
 
 **triageR** provides a streamlined, reproducible workflow for building,
 validating, and reporting clinical prediction models in R. It combines
-standard machine learning and survival analysis tools with an optional
-AI agent that recommends appropriate statistical methods, runs automated
-sensitivity analyses, and flags common clinical modelling pitfalls.
-Reports are generated in a format aligned with TRIPOD+AI reporting
-guidance, to support reproducible, guideline-conscious research.
+standard machine learning tools with an optional AI agent that
+recommends appropriate statistical methods, runs automated sensitivity
+analyses, and flags common clinical modelling pitfalls. Reports are
+generated in a format aligned with TRIPOD+AI reporting guidance, to
+support reproducible, guideline-conscious research.
 
 ## Why triageR?
 

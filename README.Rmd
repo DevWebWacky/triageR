@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 
 **triageR** provides a streamlined, reproducible workflow for building,
 validating, and reporting clinical prediction models in R. It combines
-standard machine learning and survival analysis tools with an optional
+standard machine learning tools with an optional
 AI agent that recommends appropriate statistical methods, runs automated
 sensitivity analyses, and flags common clinical modelling pitfalls.
 Reports are generated in a format aligned with TRIPOD+AI reporting
@@ -112,7 +112,7 @@ generation.
 ## Core functions
 
 | Layer | Function | Purpose |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | Data | `tr_load_clinical()` | Load and standardize clinical data |
 | Data | `tr_check_missing()` | Missingness summary and visualization |
 | Data | `tr_impute()` | Multiple imputation (mice / missForest) |
