@@ -120,7 +120,8 @@ tr_agent_review <- function(data, model, use_agent = TRUE) {
         "prioritizing the most serious issue first."
       )
       chat <- ellmer::chat_google_gemini(
-        system_prompt = "You are a careful, concise clinical biostatistics advisor."
+        system_prompt = "You are a careful, concise clinical biostatistics advisor.",
+        model = "gemini-flash-latest"
       )
       summary_text <- chat$chat(prompt)
       cat("--- AI Summary ---\n", summary_text, "\n")

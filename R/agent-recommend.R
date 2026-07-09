@@ -70,9 +70,9 @@ tr_recommend_method <- function(data, outcome, context = NULL) {
 
   #ellmer call
   chat <- ellmer::chat_google_gemini(
-    system_prompt = "You are a careful, concise clinical biostatistics advisor."
+    system_prompt = "You are a careful, concise clinical biostatistics advisor.",
+    model = "gemini-flash-latest"
   )
-
   response <- chat$chat(prompt)
 
   cat("\n--- triageR Method Recommendation ---\n\n")

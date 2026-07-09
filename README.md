@@ -5,6 +5,7 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/DevWebWacky/triageR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DevWebWacky/triageR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 **triageR** provides a streamlined, reproducible workflow for building,
