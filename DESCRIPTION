@@ -16,6 +16,7 @@ Suggests:
     mlbench,
     ranger,
     rmarkdown,
+    spelling,
     testthat (>= 3.0.0),
     xgboost
 Config/testthat/edition: 3
@@ -35,3 +36,4 @@ Imports:
     workflows,
     yardstick
 VignetteBuilder: knitr
+Language: en-US

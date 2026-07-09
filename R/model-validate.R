@@ -15,9 +15,14 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' tr_validate(model, newdata = test_set)
-#' }
+#' set.seed(1)
+#' df <- data.frame(
+#'   age = round(rnorm(50, 55, 12)),
+#'   sex = sample(c("M", "F"), 50, replace = TRUE),
+#'   disease = sample(c(0, 1), 50, replace = TRUE)
+#' )
+#' model <- tr_fit(df, outcome = "disease", engine = "logistic_reg")
+#' tr_validate(model, newdata = df)
 tr_validate <- function(model, newdata = NULL, threshold = 0.5) {
 
   if (!inherits(model, "triageR_model")) {

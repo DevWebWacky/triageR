@@ -29,7 +29,9 @@ a random-forest based approach (\code{missForest}). The method must be
 chosen explicitly, this function does not guess for you.
 }
 \examples{
-\dontrun{
-completed <- tr_impute(data, method = "mice")
-}
+df <- data.frame(
+  a = c(5, 7, 3, 9, 2, 8, 6, 4, 5, 7),
+  b = c(1, 3, 2, 4, 5, 3, 2, NA, 1, 3)
+)
+completed <- tr_impute(df, method = "mice", m = 2)
 }

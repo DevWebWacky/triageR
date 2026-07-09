@@ -11,9 +11,8 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' tr_check_missing(result)
-#' }
+#' df <- data.frame(a = c(1, NA, 3), b = c(4, 5, NA))
+#' tr_check_missing(df)
 tr_check_missing <- function(data) {
 
   if (!is.data.frame(data)) {

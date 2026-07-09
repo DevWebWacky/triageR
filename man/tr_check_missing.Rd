@@ -19,7 +19,6 @@ Produces a summary table of missingness per column, plus a visual plot
 showing the pattern of missing data across the dataset.
 }
 \examples{
-\dontrun{
-tr_check_missing(result)
-}
+df <- data.frame(a = c(1, NA, 3), b = c(4, 5, NA))
+tr_check_missing(df)
 }

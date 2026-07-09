@@ -16,9 +16,13 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' model <- tr_fit(data, outcome = "disease", engine = "logistic_reg")
-#' }
+#' set.seed(1)
+#' df <- data.frame(
+#'   age = round(rnorm(50, 55, 12)),
+#'   sex = sample(c("M", "F"), 50, replace = TRUE),
+#'   disease = sample(c(0, 1), 50, replace = TRUE)
+#' )
+#' model <- tr_fit(df, outcome = "disease", engine = "logistic_reg")
 tr_fit <- function(data, outcome, engine = c("logistic_reg", "random_forest", "boost_tree"),
                    predictors = NULL) {
 

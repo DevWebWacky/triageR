@@ -21,7 +21,10 @@ standardized \code{triageR} object with basic structure checks. This is the
 entry point for most triageR workflows.
 }
 \examples{
-\dontrun{
-df <- tr_load_clinical("patients.csv", id_col = "patient_id")
-}
+df <- data.frame(
+  id = 1:5,
+  age = c(45, 62, 38, 71, 55),
+  sex = c("F", "M", "F", "M", "F")
+)
+tr_load_clinical(df, id_col = "id")
 }
