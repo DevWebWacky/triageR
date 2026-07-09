@@ -1,5 +1,8 @@
 ---
 output: github_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r, include = FALSE}
@@ -13,7 +16,10 @@ knitr::opts_chunk$set(
 
 # triageR
 
+# triageR <img src="man/figures/logo.png" align="right" height="139"/>
+
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 **triageR** provides a streamlined, reproducible workflow for building,
@@ -28,18 +34,18 @@ guidance, to support reproducible, guideline-conscious research.
 
 Most R machine learning tooling (`tidymodels`, `mlr3`, `caret`) is
 general-purpose. Clinical researchers are left to manually stitch
-together model fitting, validation, sensitivity analysis, explainability,
-and TRIPOD-compliant reporting across many separate packages. triageR
-brings these into one coherent workflow, with clinically-aware safeguards
-built in — such as warning when validation is performed only on training
-data, and flagging low events-per-variable ratios before you finalize a
-model.
+together model fitting, validation, sensitivity analysis,
+explainability, and TRIPOD-compliant reporting across many separate
+packages. triageR brings these into one coherent workflow, with
+clinically-aware safeguards built in — such as warning when validation
+is performed only on training data, and flagging low events-per-variable
+ratios before you finalize a model.
 
 The AI agent layer is entirely **optional** — every core function works
 without any LLM/API key. The agent adds method recommendations, plain
-language pipeline review summaries, and assists with sensitivity analysis
-interpretation, but is never required to fit, validate, or explain a
-model.
+language pipeline review summaries, and assists with sensitivity
+analysis interpretation, but is never required to fit, validate, or
+explain a model.
 
 ## Installation
 
@@ -98,15 +104,15 @@ validation <- tr_validate(model, newdata = test)
 review <- tr_agent_review(train, model, use_agent = FALSE)
 ```
 
-See `vignette("triageR-intro")` for the full walkthrough, including model
-explainability, sensitivity analysis, engine comparison (logistic
+See `vignette("triageR-intro")` for the full walkthrough, including
+model explainability, sensitivity analysis, engine comparison (logistic
 regression vs. random forest vs. boosted trees), and TRIPOD+AI report
 generation.
 
 ## Core functions
 
 | Layer | Function | Purpose |
-|---|---|---|
+|----|----|----|
 | Data | `tr_load_clinical()` | Load and standardize clinical data |
 | Data | `tr_check_missing()` | Missingness summary and visualization |
 | Data | `tr_impute()` | Multiple imputation (mice / missForest) |
@@ -118,8 +124,7 @@ generation.
 | Agent | `tr_agent_review()` | Pipeline pitfall checks (imbalance, EPV, leakage) |
 | Report | `tr_tripod_report()` | TRIPOD+AI-aligned HTML/docx report |
 
-
-```
+\`\`\`
 
 ## Disclaimer
 
@@ -127,8 +132,8 @@ triageR's AI-generated recommendations and summaries are drafting aids
 intended to support, not replace, expert clinical and statistical
 judgment. The TRIPOD+AI report generator is a drafting tool and does not
 guarantee full compliance with the TRIPOD+AI checklist — always review
-against the official checklist at the
-[EQUATOR Network](https://www.equator-network.org/).
+against the official checklist at the [EQUATOR
+Network](https://www.equator-network.org/).
 
 ## License
 
