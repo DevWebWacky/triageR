@@ -169,7 +169,7 @@ tr_tripod_report(
   validation = pima_validation,
   review = pima_review,
   sensitivity = pima_sensitivity,
-  output_file = "pima_diabetes_report",
+  output_file = file.path(tempdir(), "pima_diabetes_report"),
   format = "html"
 )
 ```

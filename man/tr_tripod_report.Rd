@@ -10,7 +10,7 @@ tr_tripod_report(
   review = NULL,
   sensitivity = NULL,
   recommendation = NULL,
-  output_file = "triageR_report",
+  output_file = file.path(tempdir(), "triageR_report"),
   format = c("html", "docx")
 )
 }
@@ -26,7 +26,8 @@ tr_tripod_report(
 \item{recommendation}{Optional character string from \code{tr_recommend_method()}.}
 
 \item{output_file}{Character. File path (without extension) to save the
-report to. Defaults to \code{"triageR_report"} in the current working directory.}
+report to. Defaults to a file in \code{tempdir()}. Set explicitly (e.g.
+\code{file.path("my_folder", "report")}) to save elsewhere.}
 
 \item{format}{Character. Either \code{"html"} (default) or \code{"docx"}.}
 }
@@ -40,6 +41,7 @@ reporting guidance. This is a drafting aid, not a certified compliance tool.
 }
 \examples{
 \dontrun{
-tr_tripod_report(model, validation = val, review = rev)
+tr_tripod_report(model, validation = val, review = rev,
+  output_file = file.path(tempdir(), "report"))
 }
 }

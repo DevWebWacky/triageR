@@ -105,10 +105,10 @@ tr_validate <- function(model, newdata = NULL, threshold = 0.5) {
   )
   class(out) <- "triageR_validation"
 
-  cat("Validation metrics (", out$validated_on, "):\n\n", sep = "")
-  print(metrics_tbl)
-  cat("\nConfusion Matrix:\n\n")
-  print(conf_mat)
+  message("Validation metrics (", out$validated_on, "):\n")
+  message(paste(utils::capture.output(print(metrics_tbl)), collapse = "\n"))
+  message("\nConfusion Matrix:\n")
+  message(paste(utils::capture.output(print(conf_mat)), collapse = "\n"))
   print(roc_plot)
 
   invisible(out)

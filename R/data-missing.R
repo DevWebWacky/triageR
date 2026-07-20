@@ -33,12 +33,12 @@ tr_check_missing <- function(data) {
   summary_tbl <- summary_tbl[order(-summary_tbl$pct_missing), ]
   summary_tbl <- tibble::as_tibble(summary_tbl)
 
-  # summary
+  # message a friendly console summary (can be suppressed with suppressMessages())
   total_missing_cols <- sum(summary_tbl$n_missing > 0)
-  cat("Missing data summary:\n")
-  cat("-", total_missing_cols, "of", ncol(data), "columns have missing values\n")
-  cat("-", n_total, "total rows\n\n")
-  print(summary_tbl)
+  message("Missing data summary:")
+  message("- ", total_missing_cols, " of ", ncol(data), " columns have missing values")
+  message("- ", n_total, " total rows")
+  message(paste(utils::capture.output(print(summary_tbl)), collapse = "\n"))
 
   #visual plot (wraps naniar)
   plot <- naniar::vis_miss(data)

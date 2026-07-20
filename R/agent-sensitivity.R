@@ -110,10 +110,12 @@ tr_sensitivity <- function(data, model, subgroup_col = NULL, outlier_sd = 3) {
   )
   class(out) <- "triageR_sensitivity"
 
-  cat("\n--- Sensitivity Analysis Comparison ---\n\n")
-  print(tidyr::pivot_wider(comparison, names_from = .metric, values_from = .estimate))
-  cat("\nNote: Compare AUC/sensitivity/specificity across scenarios. Large swings",
-      "suggest the model is not robust to that assumption.\n")
+  message("\n--- Sensitivity Analysis Comparison ---\n")
+  message(paste(utils::capture.output(
+    print(tidyr::pivot_wider(comparison, names_from = .metric, values_from = .estimate))
+  ), collapse = "\n"))
+  message("\nNote: Compare AUC/sensitivity/specificity across scenarios. Large swings ",
+          "suggest the model is not robust to that assumption.")
 
   invisible(out)
 }

@@ -93,15 +93,15 @@ tr_agent_review <- function(data, model, use_agent = TRUE) {
   #build flags tibble
   if (length(flags) == 0) {
     flags_tbl <- tibble::tibble(check = character(0), message = character(0))
-    cat("\n--- triageR Pipeline Review ---\n\nNo major issues flagged.\n")
+    message("\n--- triageR Pipeline Review ---\n\nNo major issues flagged.")
   } else {
     flags_tbl <- tibble::tibble(
       check = names(flags),
       message = unlist(flags, use.names = FALSE)
     )
-    cat("\n--- triageR Pipeline Review ---\n\n")
+    message("\n--- triageR Pipeline Review ---\n")
     for (i in seq_len(nrow(flags_tbl))) {
-      cat("[", flags_tbl$check[i], "]\n", flags_tbl$message[i], "\n\n", sep = "")
+      message("[", flags_tbl$check[i], "]\n", flags_tbl$message[i], "\n")
     }
   }
 
@@ -124,7 +124,7 @@ tr_agent_review <- function(data, model, use_agent = TRUE) {
         model = "gemini-flash-latest"
       )
       summary_text <- chat$chat(prompt)
-      cat("--- AI Summary ---\n", summary_text, "\n")
+      message("--- AI Summary ---\n", summary_text)
       out$ai_summary <- summary_text
     }
   }

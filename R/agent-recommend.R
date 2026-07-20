@@ -75,10 +75,10 @@ tr_recommend_method <- function(data, outcome, context = NULL) {
   )
   response <- chat$chat(prompt)
 
-  cat("\n--- triageR Method Recommendation ---\n\n")
-  cat(response, "\n")
-  cat("\n--- This is an AI-generated suggestion. Always apply expert clinical",
-      "and statistical judgment. ---\n")
+  message("\n--- triageR Method Recommendation ---\n")
+  message(response)
+  message("\n--- This is an AI-generated suggestion. Always apply expert clinical ",
+          "and statistical judgment. ---")
 
   invisible(response)
 }

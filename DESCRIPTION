@@ -3,7 +3,7 @@ Title: Automated Machine Learning and AI Agent Tools for Clinical Prediction Mod
 Version: 0.1.0
 Authors@R: 
     person("Uwakmfon", "Paul", , "uwakmfon31@gmail.com", role = c("aut", "cre", "cph"))
-Description: A toolkit that provides a streamlined workflow for building, validating, and reporting clinical prediction models. Combines standard machine learning tools with an optional AI agent that recommends appropriate statistical methods, runs sensitivity analyses, and flags common pitfalls. Includes automated generation of reports aligned with TRIPOD+AI reporting guidance (Collins et al. (2024 <doi:10.1136/bmj-2023-078378>)) for reproducible, guideline-aligned research.
+Description: Provides a streamlined workflow for building, validating, and reporting clinical prediction models. Combines standard machine learning tools with an optional AI agent that recommends appropriate statistical methods, runs sensitivity analyses, and flags common pitfalls. Includes automated generation of reports aligned with TRIPOD+AI reporting guidance (Collins et al. (2024 <doi:10.1136/bmj-2023-078378>)) for reproducible, guideline-aligned research.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

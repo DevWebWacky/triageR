@@ -10,7 +10,8 @@
 #' @param sensitivity Optional `triageR_sensitivity` object from `tr_sensitivity()`.
 #' @param recommendation Optional character string from `tr_recommend_method()`.
 #' @param output_file Character. File path (without extension) to save the
-#'   report to. Defaults to `"triageR_report"` in the current working directory.
+#'   report to. Defaults to a file in `tempdir()`. Set explicitly (e.g.
+#'   `file.path("my_folder", "report")`) to save elsewhere.
 #' @param format Character. Either `"html"` (default) or `"docx"`.
 #'
 #' @return Invisibly returns the path to the rendered report file.
@@ -18,11 +19,12 @@
 #'
 #' @examples
 #' \dontrun{
-#' tr_tripod_report(model, validation = val, review = rev)
+#' tr_tripod_report(model, validation = val, review = rev,
+#'   output_file = file.path(tempdir(), "report"))
 #' }
 tr_tripod_report <- function(model, validation = NULL, review = NULL,
                              sensitivity = NULL, recommendation = NULL,
-                             output_file = "triageR_report",
+                             output_file = file.path(tempdir(), "triageR_report"),
                              format = c("html", "docx")) {
 
   format <- match.arg(format)
