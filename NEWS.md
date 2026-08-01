@@ -1,9 +1,6 @@
 # triageR 0.1.1
 
-* Fixed vignette build failures on CRAN caused by `mlbench` datasets not 
-  being reliably available in `data()` calls without explicit `package =` 
-  argument. Vignettes now also degrade gracefully (skip execution) if 
-  `mlbench` is unavailable in the build environment.
+* The `PimaIndianDataset` in the `mlbench` package was removed in the latest update, thus the vignette now uses the inbuilt MASS which still has the Pima Indian Diabetes Dataset.
 
 # triageR 0.1.0
 
