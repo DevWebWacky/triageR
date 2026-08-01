@@ -1,6 +1,6 @@
 # triageR 0.1.1
 
-* The `PimaIndianDataset` in the `mlbench` package was removed in the latest update, thus the vignette now uses the inbuilt MASS which still has the Pima Indian Diabetes Dataset.
+*`PimaIndianDataset` in the `mlbench` package was removed in the latest update, thus the vignette now uses the inbuilt MASS which still has the Pima Indian Diabetes Dataset.
 
 # triageR 0.1.0
 
