@@ -19,6 +19,9 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(triageR)
 library(mlbench)
+if (!requireNamespace("mlbench", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
 ```
 
 ## Overview
@@ -38,7 +41,7 @@ of the kind of cleaning `tr_load_clinical()` expects to receive data
 after.
 
 ```{r}
-data(PimaIndiansDiabetes)
+data(PimaIndiansDiabetes, package = "mlbench")
 
 pima <- PimaIndiansDiabetes
 pima$id <- seq_len(nrow(pima))

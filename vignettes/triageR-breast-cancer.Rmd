@@ -19,6 +19,9 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(triageR)
 library(mlbench)
+if (!requireNamespace("mlbench", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
 ```
 
 ## Overview
@@ -38,7 +41,7 @@ duplicates (repeat biopsies), both are realistic data quality issues
 that `triageR` is designed to surface rather than hide.
 
 ```{r}
-data(BreastCancer)
+data(BreastCancer, package = "mlbench")
 bc <- BreastCancer
 
 score_cols <- c("Cl.thickness", "Cell.size", "Cell.shape", "Marg.adhesion",

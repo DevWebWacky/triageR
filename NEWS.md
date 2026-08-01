@@ -1,5 +1,10 @@
 # triageR 0.1.1
 
+* Fixed vignette build failures on CRAN caused by `mlbench` datasets not 
+  being reliably available in `data()` calls without explicit `package =` 
+  argument. Vignettes now also degrade gracefully (skip execution) if 
+  `mlbench` is unavailable in the build environment.
+
 # triageR 0.1.0
 
 * Initial development version.
