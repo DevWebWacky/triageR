@@ -51,77 +51,29 @@ This example uses the PIMA Indians Diabetes dataset to demonstrate the
 full triageR pipeline, from raw data to a validated, explainable model.
 
 ``` r
-library(triageR)
-library(mlbench)
-
-data(PimaIndiansDiabetes)
-pima <- PimaIndiansDiabetes
-pima$id <- seq_len(nrow(pima))
-
-# convert physiologically impossible zeros to real missing values
-pima$glucose[pima$glucose == 0]   <- NA
-pima$pressure[pima$pressure == 0] <- NA
-pima$triceps[pima$triceps == 0]   <- NA
-pima$insulin[pima$insulin == 0]   <- NA
-pima$mass[pima$mass == 0]         <- NA
-
-# 1. Load and standardize
-pima_loaded <- tr_load_clinical(pima, id_col = "id")
-
-# 2. Check and impute missing data
-tr_check_missing(pima_loaded)
-#> Missing data summary:
-#> - 5 of 10 columns have missing values
-#> - 768 total rows
-#> 
-#> # A tibble: 10 × 3
-#>    column   n_missing pct_missing
-#>    <chr>        <int>       <dbl>
-#>  1 insulin        374        48.7
-#>  2 triceps        227        29.6
-#>  3 pressure        35         4.6
-#>  4 mass            11         1.4
-#>  5 glucose          5         0.7
-#>  6 pregnant         0         0  
-#>  7 pedigree         0         0  
-#>  8 age              0         0  
-#>  9 diabetes         0         0  
-#> 10 id               0         0
-```
-
-<img src="man/figures/README-example-1.png" alt="" width="100%" />
-
-``` r
-pima_imputed <- tr_impute(pima_loaded[, setdiff(names(pima_loaded), "id")],
-                           method = "mice", m = 5)
-```
-
-``` r
 # 3. Split, fit, and validate
 set.seed(42)
 train_idx <- sample(seq_len(nrow(pima_imputed)), size = floor(0.7 * nrow(pima_imputed)))
 train <- pima_imputed[train_idx, ]
 test  <- pima_imputed[-train_idx, ]
 
-model <- tr_fit(train, outcome = "diabetes", engine = "logistic_reg")
+model <- tr_fit(train, outcome = "type", engine = "logistic_reg")
 #> Model fitted successfully using engine: logistic_reg
 validation <- tr_validate(model, newdata = test)
 #> Validation metrics (newdata):
-#> 
 #> # A tibble: 4 × 3
 #>   .metric  .estimator .estimate
 #>   <chr>    <chr>          <dbl>
-#> 1 roc_auc  binary         0.835
-#> 2 sens     binary         0.587
-#> 3 spec     binary         0.865
-#> 4 accuracy binary         0.775
+#> 1 roc_auc  binary         0.873
+#> 2 sens     binary         0.742
+#> 3 spec     binary         0.797
+#> 4 accuracy binary         0.778
 #> 
 #> Confusion Matrix:
-#> 
 #>           Truth
-#> Prediction neg pos
-#>        neg 135  31
-#>        pos  21  44
+#> Prediction No Yes
+#>        No  47   8
+#>        Yes 12  23
 ```
 
 <img src="man/figures/README-example-model-1.png" alt="" width="100%" />
@@ -129,6 +81,10 @@ validation <- tr_validate(model, newdata = test)
 ``` r
 # 4. Review the pipeline for common pitfalls
 review <- tr_agent_review(train, model, use_agent = FALSE)
+#> 
+#> --- triageR Pipeline Review ---
+#> 
+#> No major issues flagged.
 ```
 
 See `vignette("triageR-intro")` for the full walkthrough, including

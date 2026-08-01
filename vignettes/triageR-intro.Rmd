@@ -16,11 +16,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
 library(triageR)
-if (!requireNamespace("mlbench", quietly = TRUE)) {
-  knitr::opts_chunk$set(eval = FALSE)
-}
 ```
 
 ## Overview
@@ -40,16 +41,12 @@ of the kind of cleaning `tr_load_clinical()` expects to receive data
 after.
 
 ```{r}
-data(PimaIndiansDiabetes, package = "mlbench")
-
-pima <- PimaIndiansDiabetes
+if (!requireNamespace("MASS", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
+library(MASS)
+pima <- Pima.tr2
 pima$id <- seq_len(nrow(pima))
-
-pima$glucose[pima$glucose == 0]   <- NA
-pima$pressure[pima$pressure == 0] <- NA
-pima$triceps[pima$triceps == 0]   <- NA
-pima$insulin[pima$insulin == 0]   <- NA
-pima$mass[pima$mass == 0]         <- NA
 
 pima_loaded <- tr_load_clinical(pima, id_col = "id")
 pima_loaded
@@ -86,7 +83,7 @@ train_idx <- sample(seq_len(n), size = floor(0.7 * n))
 pima_train <- pima_imputed[train_idx, ]
 pima_test  <- pima_imputed[-train_idx, ]
 
-pima_model <- tr_fit(pima_train, outcome = "diabetes", engine = "logistic_reg")
+pima_model <- tr_fit(pima_train, outcome = "type", engine = "logistic_reg")
 ```
 
 triageR also supports `"random_forest"` and `"boost_tree"` engines via the
@@ -94,8 +91,8 @@ same interface — useful for comparing approaches without rewriting your
 pipeline:
 
 ```{r}
-pima_model_rf  <- tr_fit(pima_train, outcome = "diabetes", engine = "random_forest")
-pima_model_xgb <- tr_fit(pima_train, outcome = "diabetes", engine = "boost_tree")
+pima_model_rf  <- tr_fit(pima_train, outcome = "type", engine = "random_forest")
+pima_model_xgb <- tr_fit(pima_train, outcome = "type", engine = "boost_tree")
 ```
 
 ## 4. Validate the model
@@ -185,7 +182,7 @@ structure of your data:
 ```{r, eval = FALSE}
 tr_recommend_method(
   pima_train,
-  outcome = "diabetes",
+  outcome = "type",
   context = "predicting diabetes onset in adult women"
 )
 ```

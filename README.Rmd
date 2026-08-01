@@ -65,20 +65,22 @@ devtools::install_github("DevWebWacky/triageR")
 This example uses the PIMA Indians Diabetes dataset to demonstrate the
 full triageR pipeline, from raw data to a validated, explainable model.
 
-```{r example, message = FALSE}
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
 library(triageR)
-library(mlbench)
 
-data(PimaIndiansDiabetes)
-pima <- PimaIndiansDiabetes
+if (!requireNamespace("MASS", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
+library(MASS)
+pima <- Pima.tr2
 pima$id <- seq_len(nrow(pima))
 
-# convert physiologically impossible zeros to real missing values
-pima$glucose[pima$glucose == 0]   <- NA
-pima$pressure[pima$pressure == 0] <- NA
-pima$triceps[pima$triceps == 0]   <- NA
-pima$insulin[pima$insulin == 0]   <- NA
-pima$mass[pima$mass == 0]         <- NA
+pima_loaded <- tr_load_clinical(pima, id_col = "id")
+pima_loaded
 
 # 1. Load and standardize
 pima_loaded <- tr_load_clinical(pima, id_col = "id")
@@ -96,7 +98,7 @@ train_idx <- sample(seq_len(nrow(pima_imputed)), size = floor(0.7 * nrow(pima_im
 train <- pima_imputed[train_idx, ]
 test  <- pima_imputed[-train_idx, ]
 
-model <- tr_fit(train, outcome = "diabetes", engine = "logistic_reg")
+model <- tr_fit(train, outcome = "type", engine = "logistic_reg")
 validation <- tr_validate(model, newdata = test)
 ```
 
