@@ -26,19 +26,11 @@ library(triageR)
 
 ## Overview
 
-This vignette walks through a full clinical prediction modelling workflow
-using triageR, from raw data to a TRIPOD+AI-aligned report. We will use the
-**PIMA Indians Diabetes** dataset, a well-known real-world clinical dataset,
-to demonstrate each stage of the pipeline.
+This vignette walks through a full clinical prediction modelling workflow using triageR, from raw data to a TRIPOD+AI-aligned report. We will use the **PIMA Indians Diabetes** dataset, a well-known real-world clinical dataset, to demonstrate each stage of the pipeline.
 
 ## 1. Load and prepare data
 
-The PIMA dataset has a known data quality issue: several clinical
-measurements use `0` to represent a missing value, which we know is
-physiologically impossible for variables like blood pressure or BMI. We
-convert these to proper `NA`s before proceeding, this is a good example
-of the kind of cleaning `tr_load_clinical()` expects to receive data
-after.
+The PIMA dataset has a known data quality issue: several clinical measurements use `0` to represent a missing value, which we know is physiologically impossible for variables like blood pressure or BMI. We convert these to proper `NA`s before proceeding, this is a good example of the kind of cleaning `tr_load_clinical()` expects to receive data after.
 
 ```{r}
 if (!requireNamespace("MASS", quietly = TRUE)) {
@@ -58,8 +50,7 @@ pima_loaded
 tr_check_missing(pima_loaded)
 ```
 
-`insulin` and `triceps` show substantial missingness — a realistic
-scenario in clinical datasets. We impute using `mice`:
+`insulin` and `triceps` show substantial missingness — a realistic scenario in clinical datasets. We impute using `mice`:
 
 ```{r, message = FALSE, results = "hide"}
 pima_for_impute <- pima_loaded[, setdiff(names(pima_loaded), "id")]
@@ -72,8 +63,7 @@ sum(is.na(pima_imputed))
 
 ## 3. Fit a model
 
-We split the data into training and test sets, then fit a logistic
-regression model.
+We split the data into training and test sets, then fit a logistic regression model.
 
 ```{r}
 set.seed(42)
@@ -86,9 +76,7 @@ pima_test  <- pima_imputed[-train_idx, ]
 pima_model <- tr_fit(pima_train, outcome = "type", engine = "logistic_reg")
 ```
 
-triageR also supports `"random_forest"` and `"boost_tree"` engines via the
-same interface — useful for comparing approaches without rewriting your
-pipeline:
+triageR also supports `"random_forest"` and `"boost_tree"` engines via the same interface — useful for comparing approaches without rewriting your pipeline:
 
 ```{r}
 pima_model_rf  <- tr_fit(pima_train, outcome = "type", engine = "random_forest")
@@ -97,9 +85,7 @@ pima_model_xgb <- tr_fit(pima_train, outcome = "type", engine = "boost_tree")
 
 ## 4. Validate the model
 
-Validation on a genuine holdout set produces discrimination metrics, a
-confusion matrix, and an ROC curve. We validate all three engines on the
-same holdout set to compare performance.
+Validation on a genuine holdout set produces discrimination metrics, a confusion matrix, and an ROC curve. We validate all three engines on the same holdout set to compare performance.
 
 ```{r}
 pima_validation     <- tr_validate(pima_model, newdata = pima_test)
@@ -128,9 +114,7 @@ pima_validation_rf$roc_plot
 pima_validation_xgb$roc_plot
 ```
 
-For the remainder of this vignette, we continue with the logistic
-regression model for explainability and reporting, as it offers the most
-directly interpretable coefficients for clinical use.
+For the remainder of this vignette, we continue with the logistic regression model for explainability and reporting, as it offers the most directly interpretable coefficients for clinical use.
 
 ## 5. Explain the model
 
@@ -138,14 +122,11 @@ directly interpretable coefficients for clinical use.
 tr_explain(pima_model, method = "permutation")
 ```
 
-Glucose consistently emerges as the strongest predictor of diabetes in
-this dataset, consistent with established clinical literature.
+Glucose consistently emerges as the strongest predictor of diabetes in this dataset, consistent with established clinical literature.
 
 ## 6. Automated pipeline review
 
-`tr_agent_review()` checks for common clinical modelling pitfalls: class
-imbalance, low events-per-variable ratio, possible data leakage, and
-small sample size.
+`tr_agent_review()` checks for common clinical modelling pitfalls: class imbalance, low events-per-variable ratio, possible data leakage, and small sample size.
 
 ```{r}
 pima_review <- tr_agent_review(pima_train, pima_model, use_agent = FALSE)
@@ -159,8 +140,7 @@ pima_sensitivity <- tr_sensitivity(pima_train, pima_model)
 
 ## 8. Generate a TRIPOD+AI-aligned report
 
-Finally, all of the above can be compiled into a single reproducible
-report, aligned with TRIPOD+AI reporting guidance.
+Finally, all of the above can be compiled into a single reproducible report, aligned with TRIPOD+AI reporting guidance.
 
 ```{r, eval = FALSE}
 tr_tripod_report(
@@ -175,9 +155,7 @@ tr_tripod_report(
 
 ## Optional: AI-assisted method recommendation
 
-If a Gemini API key is configured (see `?tr_recommend_method`), triageR
-can also suggest an appropriate statistical or ML approach based on the
-structure of your data:
+If a Gemini API key is configured (see `?tr_recommend_method`), triageR can also suggest an appropriate statistical or ML approach based on the structure of your data:
 
 ```{r, eval = FALSE}
 tr_recommend_method(
@@ -189,7 +167,4 @@ tr_recommend_method(
 
 ## Summary
 
-This vignette covered the full triageR workflow: loading and cleaning
-clinical data, handling missingness, fitting and validating a model,
-explainability, automated pipeline review, sensitivity analysis, and
-reproducible reporting, all using a real clinical dataset.
+This vignette covered the full triageR workflow: loading and cleaning clinical data, handling missingness, fitting and validating a model, explainability, automated pipeline review, sensitivity analysis, and reproducible reporting, all using a real clinical dataset.
