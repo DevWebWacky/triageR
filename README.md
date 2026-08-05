@@ -3,6 +3,9 @@
 
 # triageR <img src="man/figures/logo.png" align="right" height="139"/>
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/triageR)](https://CRAN.R-project.org/package=triageR)
+
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/DevWebWacky/triageR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DevWebWacky/triageR/actions/workflows/R-CMD-check.yaml)
