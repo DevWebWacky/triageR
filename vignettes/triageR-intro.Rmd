@@ -1,5 +1,4 @@
 ---
-g---
 title: "Introduction to triageR"
 output: rmarkdown::html_vignette
 vignette: >
