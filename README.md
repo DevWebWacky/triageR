@@ -3,6 +3,7 @@
 
 # triageR <img src="man/figures/logo.png" align="right" height="139"/>
 
+![CRAN Total](https://cranlogs.r-pkg.org/badges/grand-total/triageR)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/triageR)](https://CRAN.R-project.org/package=triageR)
 
