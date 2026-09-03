@@ -9,6 +9,9 @@
 #'   validation runs on the original training data, with a warning.
 #' @param threshold Numeric. Probability threshold for classifying the
 #'   positive class. Defaults to 0.5.
+#' @param calibration_method Character. One of `"binned"` (groups patients
+#'   into risk deciles, the standard clinical approach) or `"smooth"`
+#'   (loess-smoothed calibration curve, more granular). Defaults to `"binned"`.
 #'
 #' @return A `triageR_validation` object (list) containing a metrics tibble
 #'   and the underlying predictions, invisibly printed as a summary.
@@ -23,7 +26,10 @@
 #' )
 #' model <- tr_fit(df, outcome = "disease", engine = "logistic_reg")
 #' tr_validate(model, newdata = df)
-tr_validate <- function(model, newdata = NULL, threshold = 0.5) {
+tr_validate <- function(model, newdata = NULL, threshold = 0.5,
+                        calibration_method = c("binned", "smooth")) {
+
+  calibration_method <- match.arg(calibration_method)
 
   if (!inherits(model, "triageR_model")) {
     stop("`model` must be a triageR_model object from tr_fit().", call. = FALSE)
@@ -70,12 +76,71 @@ tr_validate <- function(model, newdata = NULL, threshold = 0.5) {
   spec <- yardstick::spec(results, truth = truth, estimate = .pred_class, event_level = "second")
   acc  <- yardstick::accuracy(results, truth = truth, estimate = .pred_class)
 
-  metrics_tbl <- dplyr::bind_rows(auc, sens, spec, acc)
-
   #build confusion matrix
   conf_mat <- yardstick::conf_mat(results, truth = truth, estimate = .pred_class)
   conf_tbl <- as.data.frame(conf_mat$table)
   names(conf_tbl) <- c("predicted", "actual", "n")
+
+  # Brier score (calibration + discrimination combined metric)
+  prob_vec <- results[[prob_col]]
+  truth_binary <- as.numeric(results$truth == event_level)
+  brier_score <- mean((prob_vec - truth_binary)^2)
+  brier_tbl <- tibble::tibble(.metric = "brier_score", .estimator = "binary",
+                              .estimate = brier_score)
+
+  metrics_tbl <- dplyr::bind_rows(auc, sens, spec, acc, brier_tbl)
+
+  # Step 5a-ii: calibration plot
+  calib_data <- data.frame(predicted = prob_vec, observed = truth_binary)
+
+  if (calibration_method == "binned") {
+    n_bins <- min(10, length(unique(calib_data$predicted)))
+    calib_data$bin <- tryCatch(
+      ggplot2::cut_number(calib_data$predicted, n = n_bins),
+      error = function(e) {
+        # fall back to fewer bins if ties prevent an even split
+        tryCatch(
+          ggplot2::cut_number(calib_data$predicted, n = max(2, n_bins - 2)),
+          error = function(e2) {
+            # last resort: single bin (still shows overall calibration point)
+            factor(rep("all", nrow(calib_data)))
+          }
+        )
+      }
+    )
+    calib_summary <- stats::aggregate(
+      cbind(predicted, observed) ~ bin, data = calib_data, FUN = mean
+    )
+
+    calibration_plot <- ggplot2::ggplot(calib_summary, ggplot2::aes(x = predicted, y = observed)) +
+      ggplot2::geom_abline(lty = 3, color = "gray50", linewidth = 0.8) +
+      ggplot2::geom_point(color = "#2C5F8A", size = 3) +
+      ggplot2::geom_line(color = "#2C5F8A", linewidth = 1) +
+      ggplot2::labs(
+        title = "Calibration Plot (Binned)",
+        subtitle = paste0("Brier score = ", round(brier_score, 3)),
+        x = "Mean Predicted Probability",
+        y = "Observed Event Rate"
+      ) +
+      ggplot2::xlim(0, 1) + ggplot2::ylim(0, 1) +
+      ggplot2::theme_minimal(base_size = 13) +
+      ggplot2::theme(plot.title = ggplot2::element_text(face = "bold"))
+
+  } else {
+    calibration_plot <- ggplot2::ggplot(calib_data, ggplot2::aes(x = predicted, y = observed)) +
+      ggplot2::geom_abline(lty = 3, color = "gray50", linewidth = 0.8) +
+      ggplot2::geom_smooth(method = "loess", se = TRUE, color = "#2C5F8A",
+                            fill = "#2C5F8A", alpha = 0.15, linewidth = 1, formula = y ~ x) +
+      ggplot2::labs(
+        title = "Calibration Plot (Smoothed)",
+        subtitle = paste0("Brier score = ", round(brier_score, 3)),
+        x = "Predicted Probability",
+        y = "Observed Event Rate"
+      ) +
+      ggplot2::xlim(0, 1) + ggplot2::ylim(0, 1) +
+      ggplot2::theme_minimal(base_size = 13) +
+      ggplot2::theme(plot.title = ggplot2::element_text(face = "bold"))
+  }
 
   #build ROC curve data and plot
   roc_data <- yardstick::roc_curve(results, truth = truth, !!prob_col, event_level = "second")
@@ -100,6 +165,7 @@ tr_validate <- function(model, newdata = NULL, threshold = 0.5) {
     confusion_matrix = conf_mat,
     roc_curve = roc_data,
     roc_plot = roc_plot,
+    calibration_plot = calibration_plot,
     predictions = results,
     validated_on = if (identical(newdata, model$training_data)) "training_data" else "newdata"
   )
@@ -110,6 +176,7 @@ tr_validate <- function(model, newdata = NULL, threshold = 0.5) {
   message("\nConfusion Matrix:\n")
   message(paste(utils::capture.output(print(conf_mat)), collapse = "\n"))
   print(roc_plot)
+  print(calibration_plot)
 
   invisible(out)
 }

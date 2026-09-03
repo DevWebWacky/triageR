@@ -4,7 +4,12 @@
 \alias{tr_validate}
 \title{Validate a clinical prediction model}
 \usage{
-tr_validate(model, newdata = NULL, threshold = 0.5)
+tr_validate(
+  model,
+  newdata = NULL,
+  threshold = 0.5,
+  calibration_method = c("binned", "smooth")
+)
 }
 \arguments{
 \item{model}{A fitted \code{triageR_model} object from \code{tr_fit()}.}
@@ -14,6 +19,10 @@ validation runs on the original training data, with a warning.}
 
 \item{threshold}{Numeric. Probability threshold for classifying the
 positive class. Defaults to 0.5.}
+
+\item{calibration_method}{Character. One of \code{"binned"} (groups patients
+into risk deciles, the standard clinical approach) or \code{"smooth"}
+(loess-smoothed calibration curve, more granular). Defaults to \code{"binned"}.}
 }
 \value{
 A \code{triageR_validation} object (list) containing a metrics tibble

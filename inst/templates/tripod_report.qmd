@@ -40,7 +40,7 @@ if (!is.null(recommendation)) {
 
 ## Validation Performance
 
-```{r}
+```{r validation-performance}
 #| echo: false
 if (!is.null(validation)) {
   knitr::kable(validation$metrics)
@@ -51,10 +51,21 @@ if (!is.null(validation)) {
 
 ### Confusion Matrix
 
-```{r}
+```{r confusion-matrix}
 #| echo: false
 if (!is.null(validation)) {
   knitr::kable(as.data.frame(validation$confusion_matrix$table))
+} else {
+  cat("Not run.")
+}
+```
+
+### Calibration
+
+```{r calibration}
+#| echo: false
+if (!is.null(validation) && !is.null(validation$calibration_plot)) {
+  print(validation$calibration_plot)
 } else {
   cat("Not run.")
 }
