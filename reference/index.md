@@ -26,6 +26,9 @@
 - [`tr_impute()`](https://devwebwacky.github.io/triageR/reference/tr_impute.md)
   : Impute missing values in a clinical dataset
 
+- [`tr_launch_app()`](https://devwebwacky.github.io/triageR/reference/tr_launch_app.md)
+  : Launch the triageR Shiny app
+
 - [`tr_load_clinical()`](https://devwebwacky.github.io/triageR/reference/tr_load_clinical.md)
   : Load and standardize a clinical dataset
 

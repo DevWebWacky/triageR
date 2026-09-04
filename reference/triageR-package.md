@@ -8,6 +8,8 @@ Useful links:
 
 - <https://github.com/DevWebWacky/triageR>
 
+- <https://devwebwacky.github.io/triageR/>
+
 - Report bugs at <https://github.com/DevWebWacky/triageR/issues>
 
 ## Author
