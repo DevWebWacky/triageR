@@ -6,6 +6,7 @@
 \usage{
 tr_tripod_report(
   model,
+  model_type = c("classification", "survival"),
   validation = NULL,
   review = NULL,
   sensitivity = NULL,
@@ -15,13 +16,20 @@ tr_tripod_report(
 )
 }
 \arguments{
-\item{model}{A fitted \code{triageR_model} object from \code{tr_fit()}.}
+\item{model}{A fitted \code{triageR_model} or \code{triageR_survival_model} object.}
 
-\item{validation}{Optional \code{triageR_validation} object from \code{tr_validate()}.}
+\item{model_type}{Character. Either \code{"classification"} (default) or
+\code{"survival"}. Must match the type of \code{model} supplied.}
+
+\item{validation}{Optional validation object: a \code{triageR_validation}
+(from \code{tr_validate()}) for classification models, or a
+\code{triageR_survival_validation} (from \code{tr_validate_survival()}) for
+survival models.}
 
 \item{review}{Optional \code{triageR_review} object from \code{tr_agent_review()}.}
 
-\item{sensitivity}{Optional \code{triageR_sensitivity} object from \code{tr_sensitivity()}.}
+\item{sensitivity}{Optional \code{triageR_sensitivity} object from \code{tr_sensitivity()}.
+Not currently supported for survival models.}
 
 \item{recommendation}{Optional character string from \code{tr_recommend_method()}.}
 
@@ -37,7 +45,8 @@ Invisibly returns the path to the rendered report file.
 \description{
 Renders a reproducible report summarizing model fit, validation,
 sensitivity analysis, and pipeline review, aligned with TRIPOD+AI
-reporting guidance. This is a drafting aid, not a certified compliance tool.
+reporting guidance. Supports both binary classification and survival
+models. This is a drafting aid, not a certified compliance tool.
 }
 \examples{
 \dontrun{

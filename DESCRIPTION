@@ -20,10 +20,10 @@ Suggests:
     testthat (>= 3.0.0),
     xgboost,
     MASS,
-    aorsf
+    aorsf,
+    censored
 Config/testthat/edition: 3
 Imports: 
-    censored,
     DALEX,
     dplyr,
     ellmer,

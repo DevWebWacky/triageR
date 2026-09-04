@@ -9,7 +9,7 @@ tr_agent_review(data, model, use_agent = TRUE)
 \arguments{
 \item{data}{The data frame used to fit the model.}
 
-\item{model}{A fitted \code{triageR_model} object from \code{tr_fit()}.}
+\item{model}{A fitted \code{triageR_model} or \code{triageR_survival_model} object.}
 
 \item{use_agent}{Logical. If \code{TRUE} (default), also generates an
 AI-written plain-language summary of the findings via \code{ellmer}.}
@@ -20,9 +20,11 @@ and, if \code{use_agent = TRUE}, an AI-generated summary.
 }
 \description{
 Runs a series of rule-based checks for common clinical-ML pitfalls
-(class imbalance, low events-per-variable, possible leakage, near-zero
-variance predictors), then optionally asks an LLM to summarize the
-findings in plain language.
+(class imbalance or low event rate, low events-per-variable, possible
+leakage, near-zero variance predictors), then optionally asks an LLM to
+summarize the findings in plain language. Works with both binary
+classification models (\code{triageR_model}) and survival models
+(\code{triageR_survival_model}).
 }
 \examples{
 \dontrun{

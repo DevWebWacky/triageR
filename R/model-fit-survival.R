@@ -29,7 +29,7 @@
 #'
 #' @examples
 #' if (requireNamespace("survival", quietly = TRUE)) {
-#'   data(lung, package = "survival")
+#'   library(survival)
 #'   lung_clean <- lung
 #'   lung_clean$status <- lung_clean$status - 1  # convert 1/2 to 0/1
 #'   lung_clean <- lung_clean[stats::complete.cases(lung_clean), ]

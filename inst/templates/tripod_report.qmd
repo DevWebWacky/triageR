@@ -14,18 +14,34 @@ params:
 #| message: false
 bundle <- readRDS(params$bundle_path)
 model <- bundle$model
+model_type <- if (!is.null(bundle$model_type)) bundle$model_type else "classification"
 validation <- bundle$validation
 review <- bundle$review
 sensitivity <- bundle$sensitivity
 recommendation <- bundle$recommendation
+is_survival <- model_type == "survival"
 ```
 
 ## Model Summary
 
-- **Engine:** `r model$engine`
-- **Outcome:** `r model$outcome`
-- **Predictors:** `r paste(model$predictors, collapse = ", ")`
-- **Training sample size:** `r nrow(model$training_data)`
+```{r}
+#| echo: false
+#| results: asis
+if (is_survival) {
+  cat("- **Engine:**", model$engine, "\n")
+  cat("- **Time column:**", model$time_col, "\n")
+  cat("- **Event column:**", model$event_col, "\n")
+  cat("- **Predictors:**", paste(model$predictors, collapse = ", "), "\n")
+  cat("- **Training sample size:**", nrow(model$training_data), "\n")
+  n_events <- sum(model$training_data[[model$event_col]] == 1, na.rm = TRUE)
+  cat("- **Events observed:**", n_events, "\n")
+} else {
+  cat("- **Engine:**", model$engine, "\n")
+  cat("- **Outcome:**", model$outcome, "\n")
+  cat("- **Predictors:**", paste(model$predictors, collapse = ", "), "\n")
+  cat("- **Training sample size:**", nrow(model$training_data), "\n")
+}
+```
 
 ## Method Recommendation (AI-assisted)
 
@@ -42,32 +58,53 @@ if (!is.null(recommendation)) {
 
 ```{r validation-performance}
 #| echo: false
-if (!is.null(validation)) {
-  knitr::kable(validation$metrics)
+if (is_survival) {
+  if (!is.null(validation)) {
+    cat("**C-index:**", round(validation$c_index, 3),
+        paste0("(SE: ", round(validation$c_index_se, 3), ")\n\n"))
+    cat("**N:**", validation$n, " | **Events:**", validation$n_events, "\n\n")
+    cat("C-index of 0.5 indicates no better than chance discrimination; ",
+        "1.0 indicates perfect discrimination between patients who ",
+        "experience the event sooner vs. later.")
+  } else {
+    cat("Not run.")
+  }
 } else {
-  cat("Not run.")
+  if (!is.null(validation)) {
+    knitr::kable(validation$metrics)
+  } else {
+    cat("Not run.")
+  }
 }
 ```
-
-### Confusion Matrix
 
 ```{r confusion-matrix}
 #| echo: false
-if (!is.null(validation)) {
-  knitr::kable(as.data.frame(validation$confusion_matrix$table))
-} else {
-  cat("Not run.")
+#| results: asis
+if (!is_survival) {
+  cat("### Confusion Matrix\n\n")
+}
+if (!is_survival) {
+  if (!is.null(validation)) {
+    print(knitr::kable(as.data.frame(validation$confusion_matrix$table)))
+  } else {
+    cat("Not run.")
+  }
 }
 ```
 
-### Calibration
-
 ```{r calibration}
 #| echo: false
-if (!is.null(validation) && !is.null(validation$calibration_plot)) {
-  print(validation$calibration_plot)
-} else {
-  cat("Not run.")
+#| results: asis
+if (!is_survival) {
+  cat("### Calibration\n\n")
+}
+if (!is_survival) {
+  if (!is.null(validation) && !is.null(validation$calibration_plot)) {
+    print(validation$calibration_plot)
+  } else {
+    cat("Not run.")
+  }
 }
 ```
 
@@ -77,7 +114,9 @@ if (!is.null(validation) && !is.null(validation$calibration_plot)) {
 
 ```{r}
 #| echo: false
-if (!is.null(sensitivity)) {
+if (is_survival) {
+  cat("Automated sensitivity analysis is not currently supported for survival models.")
+} else if (!is.null(sensitivity)) {
   knitr::kable(tidyr::pivot_wider(sensitivity$comparison, names_from = .metric, values_from = .estimate))
 } else {
   cat("Not run.")
@@ -112,8 +151,7 @@ following before submission:
   which is NOT sufficient for TRIPOD+AI compliance).
 - Confirm sample size and events-per-variable are adequate (see Pipeline
   Review Flags above).
-- Report calibration plots and confidence intervals alongside these point
-  estimates for full TRIPOD+AI compliance.
+`r if (!is_survival) "- Report calibration plots and confidence intervals alongside these point estimates for full TRIPOD+AI compliance."`
 - This report is a drafting aid, not a substitute for the full TRIPOD+AI
   checklist, available at the EQUATOR Network.
 
