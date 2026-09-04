@@ -8,7 +8,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 8.0.0
-URL: https://github.com/DevWebWacky/triageR
+URL: https://github.com/DevWebWacky/triageR, https://devwebwacky.github.io/triageR/
 BugReports: https://github.com/DevWebWacky/triageR/issues
 Suggests: 
     knitr,
