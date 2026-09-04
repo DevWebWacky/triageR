@@ -21,7 +21,9 @@ Suggests:
     xgboost,
     MASS,
     aorsf,
-    censored
+    censored,
+    shiny,
+    bslib
 Config/testthat/edition: 3
 Imports: 
     DALEX,

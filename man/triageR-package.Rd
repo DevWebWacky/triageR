@@ -12,6 +12,7 @@ triageR: Survival Analysis Utilities
 Useful links:
 \itemize{
   \item \url{https://github.com/DevWebWacky/triageR}
+  \item \url{https://devwebwacky.github.io/triageR/}
   \item Report bugs at \url{https://github.com/DevWebWacky/triageR/issues}
 }
 
