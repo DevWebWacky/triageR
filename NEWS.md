@@ -1,5 +1,12 @@
 # triageR 0.2.0
 
+* Added calibration plots (binned or smoothed) and Brier score to 
+  `tr_validate()`, closing a TRIPOD+AI reporting gap. New `calibration_method` 
+  argument (`"binned"` or `"smooth"`).
+* Calibration plot now included in `tr_tripod_report()` output.
+* Added robustness handling for models with limited probability variation 
+  (e.g. tree-based models with many identical predictions).
+
 # triageR 0.1.1
 
 *`PimaIndianDataset` in the `mlbench` package was removed in the latest update, thus the vignette now uses the inbuilt MASS which still has the Pima Indian Diabetes Dataset.

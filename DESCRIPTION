@@ -19,9 +19,11 @@ Suggests:
     spelling,
     testthat (>= 3.0.0),
     xgboost,
-    MASS
+    MASS,
+    aorsf
 Config/testthat/edition: 3
 Imports: 
+    censored,
     DALEX,
     dplyr,
     ellmer,
@@ -32,6 +34,7 @@ Imports:
     pROC,
     quarto,
     recipes,
+    survival,
     tibble,
     tidyr,
     workflows,
