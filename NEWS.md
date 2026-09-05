@@ -1,7 +1,5 @@
 # triageR 0.2.0
 
-# triageR 0.2.0
-
 * Added calibration plots (binned or smoothed) and Brier score to 
   `tr_validate()`, closing a TRIPOD+AI reporting gap. New `calibration_method` 
   argument (`"binned"` or `"smooth"`).
@@ -11,6 +9,11 @@
 * Added survival analysis support: `tr_fit_survival()` (Cox Proportional 
   Hazards and Random Survival Forest via the `censored`/`aorsf` engines) and 
   `tr_validate_survival()` (concordance index / C-index).
+* Added `tr_launch_app()`: an interactive Shiny application for the full 
+  triageR workflow (upload data, fit and compare models, validate, explain, 
+  review, and download a TRIPOD+AI report) without writing R code.
+* Fixed test suite reliability issues related to lazy-loaded survival 
+  datasets.
 
 # triageR 0.1.1
 
