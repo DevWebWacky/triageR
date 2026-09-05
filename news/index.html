@@ -39,13 +39,12 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="triager-020">triageR 0.2.0<a class="anchor" aria-label="anchor" href="#triager-020"></a></h2>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.2.0" id="triager-020-1">triageR 0.2.0<a class="anchor" aria-label="anchor" href="#triager-020-1"></a></h2>
 <ul><li>Added calibration plots (binned or smoothed) and Brier score to <code><a href="../reference/tr_validate.html">tr_validate()</a></code>, closing a TRIPOD+AI reporting gap. New <code>calibration_method</code> argument (<code>"binned"</code> or <code>"smooth"</code>).</li>
 <li>Calibration plot now included in <code><a href="../reference/tr_tripod_report.html">tr_tripod_report()</a></code> output.</li>
 <li>Added robustness handling for models with limited probability variation (e.g. tree-based models with many identical predictions).</li>
 <li>Added survival analysis support: <code><a href="../reference/tr_fit_survival.html">tr_fit_survival()</a></code> (Cox Proportional Hazards and Random Survival Forest via the <code>censored</code>/<code>aorsf</code> engines) and <code><a href="../reference/tr_validate_survival.html">tr_validate_survival()</a></code> (concordance index / C-index).</li>
+<li>Added <code><a href="../reference/tr_launch_app.html">tr_launch_app()</a></code>: an interactive Shiny application for the full triageR workflow (upload data, fit and compare models, validate, explain, review, and download a TRIPOD+AI report) without writing R code.</li>
+<li>Fixed test suite reliability issues related to lazy-loaded survival datasets.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.1" id="triager-011">triageR 0.1.1<a class="anchor" aria-label="anchor" href="#triager-011"></a></h2><p class="text-muted">CRAN release: 2026-08-02</p>

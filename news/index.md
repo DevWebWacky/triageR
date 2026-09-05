@@ -2,8 +2,6 @@
 
 ## triageR 0.2.0
 
-## triageR 0.2.0
-
 - Added calibration plots (binned or smoothed) and Brier score to
   [`tr_validate()`](https://devwebwacky.github.io/triageR/reference/tr_validate.md),
   closing a TRIPOD+AI reporting gap. New `calibration_method` argument
@@ -19,6 +17,13 @@
   `censored`/`aorsf` engines) and
   [`tr_validate_survival()`](https://devwebwacky.github.io/triageR/reference/tr_validate_survival.md)
   (concordance index / C-index).
+- Added
+  [`tr_launch_app()`](https://devwebwacky.github.io/triageR/reference/tr_launch_app.md):
+  an interactive Shiny application for the full triageR workflow (upload
+  data, fit and compare models, validate, explain, review, and download
+  a TRIPOD+AI report) without writing R code.
+- Fixed test suite reliability issues related to lazy-loaded survival
+  datasets.
 
 ## triageR 0.1.1
 

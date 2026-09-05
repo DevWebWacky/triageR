@@ -62,16 +62,13 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header">
-<img src="logo.png" class="logo" alt=""><h1 id="triager">triageR<a class="anchor" aria-label="anchor" href="#triager"></a>
+<img src="logo.png" class="logo" alt=""><h1 id="triager-">triageR <a class="anchor" aria-label="anchor" href="#triager-"></a>
 </h1>
 </div>
-</div>
-<div class="section level1">
-<h1 id="section"><a class="anchor" aria-label="anchor" href="#section"></a></h1>
-<p><img src="https://cranlogs.r-pkg.org/badges/grand-total/triageR" alt="CRAN Total"><a href="https://CRAN.R-project.org/package=triageR" class="external-link"><img src="https://www.r-pkg.org/badges/version/triageR" alt="CRAN status"></a></p>
 <!-- badges: start -->
 
-<p><strong>triageR</strong> provides a streamlined, reproducible workflow for building, validating, and reporting clinical prediction models in R. It combines standard machine learning tools with an optional AI agent that recommends appropriate statistical methods, runs automated sensitivity analyses, and flags common clinical modelling pitfalls. Reports are generated in a format aligned with TRIPOD+AI reporting guidance, to support reproducible, guideline-conscious research.</p>
+<p><strong>triageR</strong> provides a streamlined, reproducible workflow for building, validating, and reporting clinical prediction models in R. It combines standard machine learning and survival analysis tools with an optional AI agent that recommends appropriate statistical methods, runs automated sensitivity analyses, and flags common clinical modelling pitfalls. Reports are generated in a format aligned with TRIPOD+AI reporting guidance, to support reproducible, guideline-conscious research.</p>
+<p>📖 Full documentation and function reference: <a href="https://devwebwacky.github.io/triageR/" class="uri">https://devwebwacky.github.io/triageR/</a></p>
 <div class="section level2">
 <h2 id="why-triager">Why triageR?<a class="anchor" aria-label="anchor" href="#why-triager"></a>
 </h2>
@@ -81,22 +78,30 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of triageR from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>Install the released version from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"triageR"</span><span class="op">)</span></span></code></pre></div>
+<p>Or the development version from <a href="https://github.com/" class="external-link">GitHub</a>:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"DevWebWacky/triageR"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example-workflow">Example workflow<a class="anchor" aria-label="anchor" href="#example-workflow"></a>
 </h2>
-</div>
-<div class="section level2">
-<h2 id="example-workflow-1">Example workflow<a class="anchor" aria-label="anchor" href="#example-workflow-1"></a>
-</h2>
 <p>This example uses the PIMA Indians Diabetes dataset to demonstrate the full triageR pipeline, from raw data to a validated, explainable model.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># 3. Split, fit, and validate</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/DevWebWacky/triageR" class="external-link">triageR</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/" class="external-link">MASS</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pima</span> <span class="op">&lt;-</span> <span class="va">Pima.tr2</span></span>
+<span><span class="va">pima</span><span class="op">$</span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">pima</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pima_loaded</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tr_load_clinical.html">tr_load_clinical</a></span><span class="op">(</span><span class="va">pima</span>, id_col <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span></span>
+<span><span class="va">pima_imputed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="fu"><a href="reference/tr_impute.html">tr_impute</a></span><span class="op">(</span><span class="va">pima_loaded</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">pima_loaded</span><span class="op">)</span>, <span class="st">"id"</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>                                            method <span class="op">=</span> <span class="st">"mice"</span>, m <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">train_idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">pima_imputed</span><span class="op">)</span><span class="op">)</span>, size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="fl">0.7</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">pima_imputed</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">train</span> <span class="op">&lt;-</span> <span class="va">pima_imputed</span><span class="op">[</span><span class="va">train_idx</span>, <span class="op">]</span></span>
 <span><span class="va">test</span>  <span class="op">&lt;-</span> <span class="va">pima_imputed</span><span class="op">[</span><span class="op">-</span><span class="va">train_idx</span>, <span class="op">]</span></span>
@@ -105,28 +110,52 @@
 <span><span class="co">#&gt; Model fitted successfully using engine: logistic_reg</span></span>
 <span><span class="va">validation</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tr_validate.html">tr_validate</a></span><span class="op">(</span><span class="va">model</span>, newdata <span class="op">=</span> <span class="va">test</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Validation metrics (newdata):</span></span>
-<span><span class="co">#&gt; # A tibble: 4 × 3</span></span>
-<span><span class="co">#&gt;   .metric  .estimator .estimate</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 roc_auc  binary         0.873</span></span>
-<span><span class="co">#&gt; 2 sens     binary         0.742</span></span>
-<span><span class="co">#&gt; 3 spec     binary         0.797</span></span>
-<span><span class="co">#&gt; 4 accuracy binary         0.778</span></span>
+<span><span class="co">#&gt; # A tibble: 5 × 3</span></span>
+<span><span class="co">#&gt;   .metric     .estimator .estimate</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 roc_auc     binary         0.873</span></span>
+<span><span class="co">#&gt; 2 sens        binary         0.742</span></span>
+<span><span class="co">#&gt; 3 spec        binary         0.797</span></span>
+<span><span class="co">#&gt; 4 accuracy    binary         0.778</span></span>
+<span><span class="co">#&gt; 5 brier_score binary         0.142</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Confusion Matrix:</span></span>
 <span><span class="co">#&gt;           Truth</span></span>
 <span><span class="co">#&gt; Prediction No Yes</span></span>
 <span><span class="co">#&gt;        No  47   8</span></span>
 <span><span class="co">#&gt;        Yes 12  23</span></span></code></pre></div>
-<p><img src="reference/figures/README-example-model-1.png" alt="" width="100%"></p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># 4. Review the pipeline for common pitfalls</span></span>
-<span><span class="va">review</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tr_agent_review.html">tr_agent_review</a></span><span class="op">(</span><span class="va">train</span>, <span class="va">model</span>, use_agent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<p><img src="reference/figures/README-example-model-1.png" alt="" width="100%"><img src="reference/figures/README-example-model-2.png" alt="" width="100%"></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">review</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tr_agent_review.html">tr_agent_review</a></span><span class="op">(</span><span class="va">train</span>, <span class="va">model</span>, use_agent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --- triageR Pipeline Review ---</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; No major issues flagged.</span></span></code></pre></div>
 <p>See <code><a href="articles/triageR-intro.html">vignette("triageR-intro")</a></code> for the full walkthrough, including model explainability, sensitivity analysis, engine comparison (logistic regression vs. random forest vs. boosted trees), and TRIPOD+AI report generation.</p>
+</div>
+<div class="section level2">
+<h2 id="survival-analysis">Survival analysis<a class="anchor" aria-label="anchor" href="#survival-analysis"></a>
+</h2>
+<p>triageR also supports time-to-event outcomes via a parallel set of functions.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/therneau/survival" class="external-link">survival</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">lung_clean</span> <span class="op">&lt;-</span> <span class="va">lung</span></span>
+<span><span class="va">lung_clean</span><span class="op">$</span><span class="va">status</span> <span class="op">&lt;-</span> <span class="va">lung_clean</span><span class="op">$</span><span class="va">status</span> <span class="op">-</span> <span class="fl">1</span></span>
+<span><span class="va">lung_clean</span> <span class="op">&lt;-</span> <span class="va">lung_clean</span><span class="op">[</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html" class="external-link">complete.cases</a></span><span class="op">(</span><span class="va">lung_clean</span><span class="op">)</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="va">model_surv</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tr_fit_survival.html">tr_fit_survival</a></span><span class="op">(</span><span class="va">lung_clean</span>, time_col <span class="op">=</span> <span class="st">"time"</span>,</span>
+<span>                               event_col <span class="op">=</span> <span class="st">"status"</span>, engine <span class="op">=</span> <span class="st">"cox_ph"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/tr_validate_survival.html">tr_validate_survival</a></span><span class="op">(</span><span class="va">model_surv</span>, newdata <span class="op">=</span> <span class="va">lung_clean</span><span class="op">)</span></span></code></pre></div>
+<p>See <code><a href="articles/triageR-survival-analysis.html">vignette("triageR-survival-analysis")</a></code> for the full walkthrough.</p>
+</div>
+<div class="section level2">
+<h2 id="interactive-app">Interactive app<a class="anchor" aria-label="anchor" href="#interactive-app"></a>
+</h2>
+<p>For a no-code interface to the full triageR workflow, launch the built-in Shiny app:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/tr_launch_app.html">tr_launch_app</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>This provides data upload, model fitting and comparison across engines, validation, explainability, automated pipeline review, and one-click TRIPOD+AI report generation.</p>
 </div>
 <div class="section level2">
 <h2 id="core-functions">Core functions<a class="anchor" aria-label="anchor" href="#core-functions"></a>
@@ -166,12 +195,22 @@
 <tr>
 <td>Model</td>
 <td><code><a href="reference/tr_validate.html">tr_validate()</a></code></td>
-<td>Discrimination metrics, confusion matrix, and ROC curve</td>
+<td>Discrimination metrics, confusion matrix, ROC curve, and calibration</td>
 </tr>
 <tr>
 <td>Model</td>
 <td><code><a href="reference/tr_explain.html">tr_explain()</a></code></td>
 <td>Variable importance / SHAP explanations</td>
+</tr>
+<tr>
+<td>Survival</td>
+<td><code><a href="reference/tr_fit_survival.html">tr_fit_survival()</a></code></td>
+<td>Fit Cox PH or Random Survival Forest models</td>
+</tr>
+<tr>
+<td>Survival</td>
+<td><code><a href="reference/tr_validate_survival.html">tr_validate_survival()</a></code></td>
+<td>Concordance index (C-index) validation</td>
 </tr>
 <tr>
 <td>Agent</td>
@@ -193,9 +232,13 @@
 <td><code><a href="reference/tr_tripod_report.html">tr_tripod_report()</a></code></td>
 <td>TRIPOD+AI-aligned HTML/docx report</td>
 </tr>
+<tr>
+<td>App</td>
+<td><code><a href="reference/tr_launch_app.html">tr_launch_app()</a></code></td>
+<td>Launch the interactive Shiny interface</td>
+</tr>
 </tbody>
 </table>
-<p>```</p>
 </div>
 <div class="section level2">
 <h2 id="disclaimer">Disclaimer<a class="anchor" aria-label="anchor" href="#disclaimer"></a>
@@ -208,7 +251,6 @@
 <p>MIT © Uwakmfon Usen Paul</p>
 </div>
 </div>
-
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
@@ -244,6 +286,7 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="https://CRAN.R-project.org/package=triageR" class="external-link"><img src="https://www.r-pkg.org/badges/version/triageR" alt="CRAN status"></a></li>
 <li><a href="https://github.com/DevWebWacky/triageR/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/DevWebWacky/triageR/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>

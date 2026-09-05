@@ -99,7 +99,7 @@ val_cox <- tr_validate_survival(model_cox, newdata = lung_clean)
 
 val_rf <- tr_validate_survival(model_rf, newdata = lung_clean)
 #> Survival validation (training_data):
-#> C-index: 0.839 (SE: 0.018)
+#> C-index: 0.836 (SE: 0.018)
 #> N = 167, events = 120
 #> 
 #> Interpretation: C-index of 0.5 = no better than chance; 1.0 = perfect discrimination between patients who experience the event sooner vs. later.
